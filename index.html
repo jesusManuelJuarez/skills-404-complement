@@ -1,0 +1,1124 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>skills-404-complement — Índice de Agent Skills</title>
+    <style>
+      :root {
+        --surface-canvas: #090d14;
+        --surface-panel: #0f1623;
+        --surface-elevated: #151f30;
+        --surface-hover: #1b283d;
+        --surface-code: #0b111c;
+
+        --border-subtle: rgba(148, 163, 184, 0.18);
+        --border-strong: rgba(148, 163, 184, 0.42);
+
+        --text-primary: #f1f5f9;
+        --text-secondary: #cbd5e1;
+        --text-muted: #94a3b8;
+
+        --accent: #38bdf8;
+        --accent-hover: #7dd3fc;
+        --accent-ink: #03131f;
+
+        --badge-arch: #38bdf8;
+        --badge-qa: #34d399;
+        --badge-ui: #fbbf24;
+        --badge-core: #cbd5e1;
+        --danger: #f87171;
+
+        --space-1: 4px;
+        --space-2: 8px;
+        --space-3: 12px;
+        --space-4: 16px;
+        --space-6: 24px;
+        --space-8: 32px;
+
+        --radius-panel: 16px;
+        --radius-control: 8px;
+        --radius-chip: 4px;
+
+        --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        --font-mono: ui-monospace, "JetBrains Mono", "Fira Code", Menlo, Consolas, monospace;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        background: var(--surface-canvas);
+        color: var(--text-primary);
+        font-family: var(--font-sans);
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+      }
+
+      .skip-link {
+        position: absolute;
+        left: -9999px;
+        top: var(--space-2);
+        z-index: 50;
+        padding: var(--space-2) var(--space-4);
+        background: var(--accent);
+        color: var(--accent-ink);
+        font-weight: 600;
+        border-radius: var(--radius-control);
+        text-decoration: none;
+      }
+
+      .skip-link:focus {
+        left: var(--space-4);
+      }
+
+      .app-shell {
+        display: grid;
+        grid-template-columns: 320px minmax(0, 1fr);
+        min-height: 100dvh;
+        gap: var(--space-4);
+        padding: var(--space-4);
+        padding-bottom: max(var(--space-4), env(safe-area-inset-bottom));
+      }
+
+      .sidebar {
+        background: var(--surface-panel);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-panel);
+        padding: var(--space-4);
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-4);
+        height: calc(100dvh - 32px);
+        position: sticky;
+        top: var(--space-4);
+        min-width: 0;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-2);
+        padding-bottom: var(--space-3);
+        border-bottom: 1px solid var(--border-subtle);
+      }
+
+      .brand__title {
+        margin: 0;
+        font-size: 1.0625rem;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+        font-family: var(--font-mono);
+        color: var(--text-primary);
+      }
+
+      .brand__count {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        font-variant-numeric: tabular-nums;
+        color: var(--accent);
+        border: 1px solid var(--border-subtle);
+        background: var(--surface-elevated);
+        padding: var(--space-1) var(--space-2);
+        border-radius: var(--radius-chip);
+      }
+
+      .search-group {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-1);
+      }
+
+      .search-group__label {
+        font-size: 0.8125rem;
+        font-weight: 500;
+        color: var(--text-secondary);
+      }
+
+      .search-group__input {
+        width: 100%;
+        /* >= 16px evita auto-zoom en iOS Safari */
+        font-size: 1rem;
+        font-family: var(--font-sans);
+        color: var(--text-primary);
+        background: var(--surface-canvas);
+        border: 1px solid var(--border-strong);
+        border-radius: var(--radius-control);
+        padding: var(--space-2) var(--space-3);
+        min-height: 40px;
+      }
+
+      .search-group__input::placeholder {
+        color: var(--text-muted);
+      }
+
+      .filter-nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-2);
+      }
+
+      .filter-chip {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 32px;
+        padding: var(--space-1) var(--space-2);
+        font-size: 0.75rem;
+        font-weight: 600;
+        font-family: var(--font-mono);
+        color: var(--text-secondary);
+        background: var(--surface-elevated);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-control);
+        cursor: pointer;
+        transition: background-color 150ms ease-out, border-color 150ms ease-out;
+      }
+
+      .filter-chip[aria-pressed="true"] {
+        background: var(--surface-hover);
+        color: var(--accent);
+        border-color: var(--accent);
+      }
+
+      .doc-nav {
+        flex: 1;
+        min-height: 0;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-1);
+        padding-right: var(--space-1);
+      }
+
+      .doc-item {
+        width: 100%;
+        text-align: start;
+        background: transparent;
+        border: 1px solid transparent;
+        border-radius: var(--radius-control);
+        padding: var(--space-2) var(--space-3);
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-1);
+        color: var(--text-secondary);
+        transition: background-color 150ms ease-out, border-color 150ms ease-out;
+      }
+
+      .doc-item[aria-current="page"] {
+        background: var(--surface-elevated);
+        border-color: var(--accent);
+        color: var(--text-primary);
+      }
+
+      .doc-item__top {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: var(--space-2);
+        min-width: 0;
+      }
+
+      .doc-item__title {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: inherit;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .doc-item__meta {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        font-variant-numeric: tabular-nums;
+        color: var(--text-muted);
+        flex-shrink: 0;
+      }
+
+      .doc-item__path {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .main-panel {
+        background: var(--surface-panel);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-panel);
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+      }
+
+      .toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-3);
+        padding: var(--space-3) var(--space-6);
+        border-bottom: 1px solid var(--border-subtle);
+        flex-wrap: wrap;
+      }
+
+      .toolbar__meta {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+        min-width: 0;
+        flex: 1;
+      }
+
+      .toolbar__path {
+        font-family: var(--font-mono);
+        font-size: 0.8125rem;
+        color: var(--text-secondary);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .cat-badge {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        font-weight: 600;
+        padding: var(--space-1) var(--space-2);
+        border-radius: var(--radius-chip);
+        border: 1px solid var(--border-subtle);
+        background: var(--surface-elevated);
+        flex-shrink: 0;
+      }
+
+      .cat-badge[data-cat="ARQUITECTURE"] { color: var(--badge-arch); }
+      .cat-badge[data-cat="QA-VALIDATOR"] { color: var(--badge-qa); }
+      .cat-badge[data-cat="UI"] { color: var(--badge-ui); }
+      .cat-badge[data-cat="CORE"] { color: var(--badge-core); }
+
+      .toolbar__actions {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-2);
+        min-height: 36px;
+        min-width: 96px;
+        padding: var(--space-2) var(--space-4);
+        border-radius: var(--radius-control);
+        font-family: var(--font-sans);
+        font-size: 0.875rem;
+        font-weight: 600;
+        text-decoration: none;
+        cursor: pointer;
+        border: 1px solid transparent;
+        transition: transform 150ms ease-out, background-color 150ms ease-out;
+      }
+
+      .btn--primary {
+        background: var(--accent);
+        color: var(--accent-ink);
+      }
+
+      .btn--secondary {
+        background: var(--surface-elevated);
+        color: var(--text-primary);
+        border-color: var(--border-strong);
+      }
+
+      .btn--menu {
+        display: none;
+        min-width: 44px;
+      }
+
+      .btn:active {
+        transform: scale(0.98);
+      }
+
+      .btn:disabled,
+      .btn[aria-disabled="true"] {
+        opacity: 0.55;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      @media (hover: hover) {
+        .btn--primary:hover:not(:disabled) {
+          background: var(--accent-hover);
+        }
+        .btn--secondary:hover:not(:disabled),
+        .filter-chip:hover,
+        .doc-item:hover {
+          background: var(--surface-hover);
+        }
+      }
+
+      .search-group__input:focus-visible,
+      .filter-chip:focus-visible,
+      .doc-item:focus-visible,
+      .btn:focus-visible,
+      .prose a:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+      }
+
+      .doc-content {
+        padding: var(--space-6) var(--space-8);
+        flex: 1;
+        min-width: 0;
+      }
+
+      .prose {
+        max-width: 65ch;
+        color: var(--text-secondary);
+        font-size: 0.9375rem;
+        line-height: 1.6;
+      }
+
+      .prose h2,
+      .prose h3,
+      .prose h4,
+      .prose h5 {
+        color: var(--text-primary);
+        line-height: 1.25;
+        text-wrap: balance;
+        margin-top: var(--space-6);
+        margin-bottom: var(--space-2);
+      }
+
+      .prose h2:first-child {
+        margin-top: 0;
+      }
+
+      .prose h2 { font-size: 1.5rem; }
+      .prose h3 { font-size: 1.1875rem; border-bottom: 1px solid var(--border-subtle); padding-bottom: var(--space-2); }
+      .prose h4 { font-size: 1rem; }
+
+      .prose p,
+      .prose ul,
+      .prose ol,
+      .prose blockquote,
+      .prose pre,
+      .prose table {
+        margin: 0 0 var(--space-4) 0;
+      }
+
+      .prose ul,
+      .prose ol {
+        padding-left: var(--space-6);
+      }
+
+      .prose li {
+        margin-bottom: var(--space-1);
+      }
+
+      .prose a {
+        color: var(--accent);
+        text-underline-offset: 3px;
+      }
+
+      .prose code {
+        font-family: var(--font-mono);
+        font-size: 0.85em;
+        background: var(--surface-elevated);
+        color: var(--text-primary);
+        padding: 2px 6px;
+        border-radius: var(--radius-chip);
+      }
+
+      .prose pre {
+        background: var(--surface-code);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-control);
+        padding: var(--space-4);
+        overflow-x: auto;
+      }
+
+      .prose pre code {
+        background: transparent;
+        padding: 0;
+        font-size: 0.8125rem;
+        line-height: 1.55;
+      }
+
+      .prose blockquote {
+        border-left: 3px solid var(--accent);
+        background: var(--surface-elevated);
+        padding: var(--space-3) var(--space-4);
+        border-radius: 0 var(--radius-control) var(--radius-control) 0;
+        color: var(--text-secondary);
+      }
+
+      .table-wrap {
+        overflow-x: auto;
+        margin-bottom: var(--space-4);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-control);
+      }
+
+      .prose table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 0;
+        font-size: 0.875rem;
+      }
+
+      .prose th,
+      .prose td {
+        text-align: start;
+        padding: var(--space-2) var(--space-3);
+        border-bottom: 1px solid var(--border-subtle);
+        vertical-align: top;
+      }
+
+      .prose th {
+        color: var(--text-primary);
+        background: var(--surface-elevated);
+        font-weight: 600;
+      }
+
+      .frontmatter-card {
+        background: var(--surface-elevated);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-control);
+        padding: var(--space-3) var(--space-4);
+        margin-bottom: var(--space-6);
+        font-family: var(--font-mono);
+        font-size: 0.8125rem;
+        color: var(--text-secondary);
+      }
+
+      .skeleton {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-4);
+        max-width: 65ch;
+      }
+
+      .skeleton__bar {
+        height: 16px;
+        background: var(--surface-elevated);
+        border-radius: var(--radius-chip);
+      }
+
+      .skeleton__bar--title {
+        height: 28px;
+        width: 60%;
+      }
+
+      .skeleton__bar--short {
+        width: 45%;
+      }
+
+      .state-box {
+        max-width: 65ch;
+        background: var(--surface-elevated);
+        border: 1px solid var(--border-strong);
+        border-radius: var(--radius-control);
+        padding: var(--space-6);
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-3);
+      }
+
+      .state-box--error {
+        border-color: var(--danger);
+      }
+
+      .state-box__title {
+        margin: 0;
+        font-size: 1.0625rem;
+        color: var(--text-primary);
+      }
+
+      .state-box__actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-2);
+      }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+      }
+
+      @media (pointer: coarse) {
+        .btn,
+        .filter-chip,
+        .doc-item {
+          min-height: 44px;
+        }
+      }
+
+      @media (max-width: 900px) {
+        .app-shell {
+          grid-template-columns: minmax(0, 1fr);
+          padding: var(--space-2);
+        }
+
+        .btn--menu {
+          display: inline-flex;
+        }
+
+        .sidebar {
+          display: none;
+          position: fixed;
+          inset: var(--space-2);
+          z-index: 40;
+          height: auto;
+        }
+
+        .sidebar[data-open="true"] {
+          display: flex;
+        }
+
+        .toolbar {
+          padding: var(--space-3) var(--space-4);
+        }
+
+        .doc-content {
+          padding: var(--space-4);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .btn,
+        .filter-chip,
+        .doc-item {
+          transition: none;
+        }
+        .btn:active {
+          transform: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Ir al contenido principal</a>
+
+    <div class="app-shell">
+      <aside id="sidebar-drawer" class="sidebar" aria-label="Navegador de skills">
+        <div class="brand">
+          <h1 class="brand__title">skills-404-complement</h1>
+          <span id="doc-counter" class="brand__count">32</span>
+        </div>
+
+        <div class="search-group">
+          <label for="doc-search" class="search-group__label">Buscar skill, regla o ejemplo</label>
+          <input
+            id="doc-search"
+            class="search-group__input"
+            type="search"
+            placeholder="ej. N+1, SOLID, 44px, AbortSignal"
+            autocomplete="off"
+          />
+        </div>
+
+        <nav class="filter-nav" aria-label="Filtro por categoría">
+          <button type="button" class="filter-chip" data-category="ALL" aria-pressed="true">ALL</button>
+          <button type="button" class="filter-chip" data-category="ARQUITECTURE" aria-pressed="false">ARQUITECTURE</button>
+          <button type="button" class="filter-chip" data-category="QA-VALIDATOR" aria-pressed="false">QA-VALIDATOR</button>
+          <button type="button" class="filter-chip" data-category="UI" aria-pressed="false">UI</button>
+          <button type="button" class="filter-chip" data-category="CORE" aria-pressed="false">CORE</button>
+        </nav>
+
+        <nav id="doc-list" class="doc-nav" aria-label="Índice de documentos Markdown"></nav>
+      </aside>
+
+      <main id="main-content" class="main-panel">
+        <header class="toolbar">
+          <div class="toolbar__meta">
+            <button
+              id="menu-toggle"
+              type="button"
+              class="btn btn--secondary btn--menu"
+              aria-expanded="false"
+              aria-controls="sidebar-drawer"
+              aria-label="Abrir índice de documentos"
+            >
+              Índice
+            </button>
+            <span id="active-category" class="cat-badge" data-cat="CORE">CORE</span>
+            <span id="active-path" class="toolbar__path">README.md</span>
+          </div>
+
+          <div class="toolbar__actions">
+            <a id="raw-link" class="btn btn--secondary" href="./README.md">Abrir .md</a>
+            <button id="copy-btn" type="button" class="btn btn--primary">Copiar Markdown</button>
+          </div>
+        </header>
+
+        <div id="live-status" class="sr-only" aria-live="polite"></div>
+        <article id="doc-viewer" class="doc-content" aria-busy="false"></article>
+      </main>
+    </div>
+
+    <script type="module">
+      const CATALOG = Object.freeze([
+        { path: "README.md", title: "skills-404-complement", category: "CORE", kind: "ROOT", version: "1.0.0", lines: 106 },
+        { path: "CHANGELOG.md", title: "Changelog", category: "CORE", kind: "ROOT", version: "-", lines: 22 },
+        { path: "_TEMPLATE/SKILL_TEMPLATE.md", title: "Plantilla Base de Skill", category: "CORE", kind: "TEMPLATE", version: "1.0.0", lines: 80 },
+
+        { path: "ARQUITECTURE/CleanCode/SKILL.md", title: "Clean Code & Refactoring Seguro", category: "ARQUITECTURE", kind: "SKILL", version: "1.0.0", lines: 88 },
+        { path: "ARQUITECTURE/CleanCode/references/principles-matrix.md", title: "Matriz Operativa de Principios", category: "ARQUITECTURE", kind: "REF", version: "-", lines: 138 },
+        { path: "ARQUITECTURE/CleanCode/references/code-smells-catalog.md", title: "Catálogo de Code Smells", category: "ARQUITECTURE", kind: "REF", version: "-", lines: 68 },
+        { path: "ARQUITECTURE/CleanCode/references/refactoring-mechanics.md", title: "Mecánicas Seguras de Refactorización", category: "ARQUITECTURE", kind: "REF", version: "-", lines: 134 },
+        { path: "ARQUITECTURE/CleanCode/references/checklist-and-heuristics.md", title: "Checklist y Anti-Sobreingeniería", category: "ARQUITECTURE", kind: "REF", version: "-", lines: 84 },
+        { path: "ARQUITECTURE/CleanCode/examples/01-refactoring-conditionals-and-functions.md", title: "Ej. 01 — Condicionales y Funciones", category: "ARQUITECTURE", kind: "EXAMPLE", version: "-", lines: 220 },
+        { path: "ARQUITECTURE/CleanCode/examples/02-deep-modules-cohesion-and-boundaries.md", title: "Ej. 02 — Deep Modules y Wrong Abstraction", category: "ARQUITECTURE", kind: "EXAMPLE", version: "-", lines: 189 },
+        { path: "ARQUITECTURE/CleanCode/examples/03-audit-output-sample.md", title: "Ej. 03 — Salida Auditoría Clean Code", category: "ARQUITECTURE", kind: "EXAMPLE", version: "-", lines: 85 },
+
+        { path: "ARQUITECTURE/HexagonalArchitecture/SKILL.md", title: "Arquitectura Hexagonal & SOLID", category: "ARQUITECTURE", kind: "SKILL", version: "1.0.0", lines: 84 },
+        { path: "ARQUITECTURE/HexagonalArchitecture/references/solid-and-dependency-rule.md", title: "SOLID y Regla de Dependencia", category: "ARQUITECTURE", kind: "REF", version: "-", lines: 106 },
+        { path: "ARQUITECTURE/HexagonalArchitecture/references/ports-and-adapters-guide.md", title: "Guía de Puertos y Adaptadores", category: "ARQUITECTURE", kind: "REF", version: "-", lines: 54 },
+        { path: "ARQUITECTURE/HexagonalArchitecture/references/anti-patterns-and-checklist.md", title: "Anti-Patrones y Checklist Hexagonal", category: "ARQUITECTURE", kind: "REF", version: "-", lines: 35 },
+        { path: "ARQUITECTURE/HexagonalArchitecture/examples/01-hexagonal-use-case-and-solid.md", title: "Ej. 01 — Caso de Uso Hexagonal + SOLID", category: "ARQUITECTURE", kind: "EXAMPLE", version: "-", lines: 220 },
+        { path: "ARQUITECTURE/HexagonalArchitecture/examples/02-adapter-resilience-and-testing.md", title: "Ej. 02 — Adaptadores, Redis y Fakes", category: "ARQUITECTURE", kind: "EXAMPLE", version: "-", lines: 174 },
+
+        { path: "QA-VALIDATOR/SKILL.md", title: "QA Validator — Estándares de Producción", category: "QA-VALIDATOR", kind: "SKILL", version: "1.0.0", lines: 92 },
+        { path: "QA-VALIDATOR/references/performance-frontend.md", title: "Eficiencia en Frontend y UX Percibida", category: "QA-VALIDATOR", kind: "REF", version: "-", lines: 98 },
+        { path: "QA-VALIDATOR/references/performance-backend-data.md", title: "Eficiencia en Backend, Datos e Infra", category: "QA-VALIDATOR", kind: "REF", version: "-", lines: 71 },
+        { path: "QA-VALIDATOR/references/security-owasp.md", title: "Seguridad OWASP y Dependencias", category: "QA-VALIDATOR", kind: "REF", version: "-", lines: 23 },
+        { path: "QA-VALIDATOR/references/resilience-and-observability.md", title: "Resiliencia y OpenTelemetry", category: "QA-VALIDATOR", kind: "REF", version: "-", lines: 53 },
+        { path: "QA-VALIDATOR/references/behavior-and-testing.md", title: "Comportamiento, Testing y Quality Gate", category: "QA-VALIDATOR", kind: "REF", version: "-", lines: 52 },
+        { path: "QA-VALIDATOR/examples/01-qa-production-audit-sample.md", title: "Ej. 01 — Auditoría Full-Stack QA", category: "QA-VALIDATOR", kind: "EXAMPLE", version: "-", lines: 93 },
+
+        { path: "UI/SKILL.md", title: "Reglas Invariantes de Ingeniería UI", category: "UI", kind: "SKILL", version: "1.0.0", lines: 97 },
+        { path: "UI/references/layout-alignment-and-geometry.md", title: "Layout, Alineación y Geometría", category: "UI", kind: "REF", version: "-", lines: 76 },
+        { path: "UI/references/buttons-forms-and-interactions.md", title: "Botones, Formularios e Interacciones", category: "UI", kind: "REF", version: "-", lines: 83 },
+        { path: "UI/references/typography-and-color.md", title: "Tipografía, Color y Contraste", category: "UI", kind: "REF", version: "-", lines: 34 },
+        { path: "UI/references/semantics-and-accessibility.md", title: "Semántica DOM y Cero Duplicados", category: "UI", kind: "REF", version: "-", lines: 19 },
+        { path: "UI/references/ui-audit-checklist.md", title: "Checklist de Auditoría UI", category: "UI", kind: "REF", version: "-", lines: 64 },
+        { path: "UI/examples/01-ui-component-refactor-before-after.md", title: "Ej. 01 — Refactor TSX/CSS UI", category: "UI", kind: "EXAMPLE", version: "-", lines: 328 },
+        { path: "UI/examples/02-ui-audit-report-sample.md", title: "Ej. 02 — Auditoría UI Modelo", category: "UI", kind: "EXAMPLE", version: "-", lines: 78 },
+      ]);
+
+      const CATALOG_PATHS = new Set(CATALOG.map((item) => item.path));
+
+      // Núcleo puro: filtrado, rutas y renderizado seguro
+      function filterDocuments(docs, category, query) {
+        const normalized = query.trim().toLowerCase();
+        return docs.filter((doc) => {
+          if (category !== "ALL" && doc.category !== category) return false;
+          if (!normalized) return true;
+          return (
+            doc.title.toLowerCase().includes(normalized) ||
+            doc.path.toLowerCase().includes(normalized) ||
+            doc.kind.toLowerCase().includes(normalized)
+          );
+        });
+      }
+
+      function resolveRelativeDocPath(currentPath, href) {
+        if (!href || /^(https?:|mailto:|#)/i.test(href)) return null;
+        const cleanHref = href.split("#")[0];
+        if (!cleanHref.endsWith(".md")) return null;
+        const baseParts = currentPath.split("/").slice(0, -1);
+        for (const segment of cleanHref.split("/")) {
+          if (!segment || segment === ".") continue;
+          if (segment === "..") baseParts.pop();
+          else baseParts.push(segment);
+        }
+        const resolved = baseParts.join("/");
+        return CATALOG_PATHS.has(resolved) ? resolved : null;
+      }
+
+      function escapeHtml(raw) {
+        return raw
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+      }
+
+      function isSafeExternalUrl(url) {
+        return /^https?:\/\//i.test(url);
+      }
+
+      function renderInline(raw, currentPath) {
+        let out = escapeHtml(raw);
+        out = out.replace(/`([^`]+)`/g, "<code>$1</code>");
+        out = out.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+        out = out.replace(/\*([^*]+)\*/g, "<em>$1</em>");
+        out = out.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, label, href) => {
+          const internal = resolveRelativeDocPath(currentPath, href);
+          if (internal) {
+            return `<a href="#doc=${encodeURIComponent(internal)}" data-doc-link="${escapeHtml(internal)}">${label}</a>`;
+          }
+          if (isSafeExternalUrl(href)) {
+            return `<a href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer">${label}</a>`;
+          }
+          return label;
+        });
+        return out;
+      }
+
+      function splitFrontmatter(markdown) {
+        const match = markdown.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
+        if (!match) return { meta: "", body: markdown };
+        return { meta: match[1], body: match[2] };
+      }
+
+      function renderMarkdownSafe(markdown, currentPath) {
+        const { meta, body } = splitFrontmatter(markdown);
+        const lines = body.replace(/\r\n/g, "\n").split("\n");
+        const html = [];
+
+        if (meta) {
+          html.push(`<pre class="frontmatter-card"><code>${escapeHtml(meta)}</code></pre>`);
+        }
+
+        let i = 0;
+        while (i < lines.length) {
+          const line = lines[i];
+          if (!line.trim()) {
+            i += 1;
+            continue;
+          }
+
+          if (line.trim().startsWith("```")) {
+            const codeLines = [];
+            i += 1;
+            while (i < lines.length && !lines[i].trim().startsWith("```")) {
+              codeLines.push(lines[i]);
+              i += 1;
+            }
+            i += 1;
+            html.push(`<pre><code>${escapeHtml(codeLines.join("\n"))}</code></pre>`);
+            continue;
+          }
+
+          const heading = line.match(/^(#{1,4})\s+(.+)$/);
+          if (heading) {
+            // Baja 1 nivel para mantener un único h1 en el DOM
+            const level = Math.min(heading[1].length + 1, 5);
+            html.push(`<h${level}>${renderInline(heading[2], currentPath)}</h${level}>`);
+            i += 1;
+            continue;
+          }
+
+          if (/^---+$/.test(line.trim())) {
+            i += 1;
+            continue;
+          }
+
+          if (line.trim().startsWith(">")) {
+            const quoteLines = [];
+            while (i < lines.length && lines[i].trim().startsWith(">")) {
+              quoteLines.push(lines[i].trim().replace(/^>\s?/, ""));
+              i += 1;
+            }
+            html.push(`<blockquote>${renderInline(quoteLines.join(" "), currentPath)}</blockquote>`);
+            continue;
+          }
+
+          if (line.includes("|") && i + 1 < lines.length && /^\s*\|?[\s:-]+\|/.test(lines[i + 1])) {
+            const parseRow = (row) =>
+              row.trim().replace(/^\||\|$/g, "").split("|").map((c) => c.trim());
+            const headers = parseRow(line);
+            i += 2;
+            const rows = [];
+            while (i < lines.length && lines[i].includes("|") && lines[i].trim()) {
+              rows.push(parseRow(lines[i]));
+              i += 1;
+            }
+            const thead = `<thead><tr>${headers.map((h) => `<th>${renderInline(h, currentPath)}</th>`).join("")}</tr></thead>`;
+            const tbody = `<tbody>${rows.map((r) => `<tr>${r.map((c) => `<td>${renderInline(c, currentPath)}</td>`).join("")}</tr>`).join("")}</tbody>`;
+            html.push(`<div class="table-wrap"><table>${thead}${tbody}</table></div>`);
+            continue;
+          }
+
+          if (/^\s*[-*]\s+/.test(line) || /^\s*\d+\.\s+/.test(line)) {
+            const isOrdered = /^\s*\d+\.\s+/.test(line);
+            const tag = isOrdered ? "ol" : "ul";
+            const pattern = isOrdered ? /^\s*\d+\.\s+/ : /^\s*[-*]\s+/;
+            const items = [];
+            while (i < lines.length && pattern.test(lines[i])) {
+              items.push(`<li>${renderInline(lines[i].replace(pattern, ""), currentPath)}</li>`);
+              i += 1;
+            }
+            html.push(`<${tag}>${items.join("")}</${tag}>`);
+            continue;
+          }
+
+          const para = [];
+          while (
+            i < lines.length &&
+            lines[i].trim() &&
+            !/^(#{1,4}\s|```|>|\s*[-*]\s|\s*\d+\.\s|---+$)/.test(lines[i])
+          ) {
+            para.push(lines[i].trim());
+            i += 1;
+          }
+          html.push(`<p>${renderInline(para.join(" "), currentPath)}</p>`);
+        }
+
+        return html.join("\n");
+      }
+
+      // Caché, deduplicación, timeout y cancelación
+      function createMarkdownLoader(timeoutMs = 8000) {
+        const cache = new Map();
+        const inFlight = new Map();
+
+        return {
+          async load(path, externalSignal) {
+            if (cache.has(path)) return cache.get(path);
+            if (inFlight.has(path)) return inFlight.get(path);
+
+            const request = (async () => {
+              const signal = externalSignal
+                ? AbortSignal.any([externalSignal, AbortSignal.timeout(timeoutMs)])
+                : AbortSignal.timeout(timeoutMs);
+              const response = await fetch(`./${path}`, { signal });
+              if (!response.ok) {
+                throw new Error(`HTTP_${response.status}`);
+              }
+              const text = await response.text();
+              cache.set(path, text);
+              return text;
+            })().finally(() => {
+              inFlight.delete(path);
+            });
+
+            inFlight.set(path, request);
+            return request;
+          },
+        };
+      }
+
+      const loader = createMarkdownLoader();
+      const state = {
+        category: "ALL",
+        query: "",
+        activePath: "README.md",
+        activeMarkdown: "",
+      };
+
+      let activeAbortController = null;
+      let skeletonTimer = null;
+      let searchDebounce = null;
+
+      const els = {
+        sidebar: document.getElementById("sidebar-drawer"),
+        menuToggle: document.getElementById("menu-toggle"),
+        counter: document.getElementById("doc-counter"),
+        search: document.getElementById("doc-search"),
+        filterButtons: Array.from(document.querySelectorAll(".filter-chip")),
+        docList: document.getElementById("doc-list"),
+        activeCategory: document.getElementById("active-category"),
+        activePath: document.getElementById("active-path"),
+        rawLink: document.getElementById("raw-link"),
+        copyBtn: document.getElementById("copy-btn"),
+        liveStatus: document.getElementById("live-status"),
+        viewer: document.getElementById("doc-viewer"),
+      };
+
+      function setDrawerOpen(open) {
+        els.sidebar.setAttribute("data-open", open ? "true" : "false");
+        els.menuToggle.setAttribute("aria-expanded", open ? "true" : "false");
+        if (open) els.search.focus();
+        else if (document.activeElement && els.sidebar.contains(document.activeElement)) {
+          els.menuToggle.focus();
+        }
+      }
+
+      function renderSidebarList() {
+        const filtered = filterDocuments(CATALOG, state.category, state.query);
+        els.counter.textContent = String(filtered.length);
+
+        if (filtered.length === 0) {
+          els.docList.innerHTML = `
+            <div class="state-box">
+              <p class="state-box__title">Sin coincidencias</p>
+              <button type="button" id="clear-filters-btn" class="btn btn--secondary">Limpiar filtros</button>
+            </div>
+          `;
+          document.getElementById("clear-filters-btn")?.addEventListener("click", () => {
+            state.category = "ALL";
+            state.query = "";
+            els.search.value = "";
+            els.filterButtons.forEach((b) => b.setAttribute("aria-pressed", b.dataset.category === "ALL" ? "true" : "false"));
+            renderSidebarList();
+          });
+          return;
+        }
+
+        els.docList.innerHTML = filtered
+          .map((doc) => {
+            const isCurrent = doc.path === state.activePath;
+            const metaText = doc.version !== "-" ? `v${doc.version}` : `${doc.lines}L`;
+            return `
+              <button
+                type="button"
+                class="doc-item"
+                data-doc-path="${escapeHtml(doc.path)}"
+                aria-current="${isCurrent ? "page" : "false"}"
+                aria-label="Abrir ${escapeHtml(doc.title)} (${escapeHtml(doc.path)})"
+              >
+                <span class="doc-item__top">
+                  <span class="doc-item__title">${escapeHtml(doc.title)}</span>
+                  <span class="doc-item__meta">${metaText}</span>
+                </span>
+                <span class="doc-item__path">${escapeHtml(doc.path)}</span>
+              </button>
+            `;
+          })
+          .join("");
+      }
+
+      function renderSkeleton() {
+        els.viewer.innerHTML = `
+          <div class="skeleton" aria-label="Cargando documento">
+            <div class="skeleton__bar skeleton__bar--title"></div>
+            <div class="skeleton__bar"></div>
+            <div class="skeleton__bar"></div>
+            <div class="skeleton__bar skeleton__bar--short"></div>
+          </div>
+        `;
+      }
+
+      function renderLoadError(path, err) {
+        const isFileProtocol = window.location.protocol === "file:";
+        const detail = isFileProtocol
+          ? "Los navegadores bloquean fetch() sobre file://. Ejecuta un servidor estático local (por ejemplo: python3 -m http.server 8080) o abre el archivo .md directamente."
+          : `No se pudo leer ${path} (${err instanceof Error ? err.message : "Error de red"}).`;
+
+        els.viewer.innerHTML = `
+          <div class="state-box state-box--error" role="alert">
+            <h2 class="state-box__title">No se pudo cargar el documento</h2>
+            <p>${escapeHtml(detail)}</p>
+            <div class="state-box__actions">
+              <button type="button" id="retry-load-btn" class="btn btn--secondary">Reintentar</button>
+              <a class="btn btn--primary" href="./${escapeHtml(path)}">Abrir ${escapeHtml(path)}</a>
+            </div>
+          </div>
+        `;
+        document.getElementById("retry-load-btn")?.addEventListener("click", () => selectDocument(path));
+      }
+
+      async function selectDocument(path) {
+        if (!CATALOG_PATHS.has(path)) return;
+        const entry = CATALOG.find((d) => d.path === path);
+        state.activePath = path;
+        state.activeMarkdown = "";
+
+        els.activeCategory.textContent = entry.category;
+        els.activeCategory.setAttribute("data-cat", entry.category);
+        els.activePath.textContent = path;
+        els.rawLink.setAttribute("href", `./${path}`);
+        els.copyBtn.disabled = true;
+        window.history.replaceState(null, "", `#doc=${encodeURIComponent(path)}`);
+        renderSidebarList();
+        setDrawerOpen(false);
+
+        activeAbortController?.abort();
+        activeAbortController = new AbortController();
+        clearTimeout(skeletonTimer);
+        els.viewer.setAttribute("aria-busy", "true");
+
+        // Retraso 150ms evita parpadeo en respuestas desde caché
+        skeletonTimer = setTimeout(renderSkeleton, 150);
+
+        try {
+          const markdown = await loader.load(path, activeAbortController.signal);
+          clearTimeout(skeletonTimer);
+          state.activeMarkdown = markdown;
+          els.viewer.innerHTML = `<div class="prose">${renderMarkdownSafe(markdown, path)}</div>`;
+          els.copyBtn.disabled = false;
+          els.liveStatus.textContent = `Documento cargado: ${entry.title}`;
+        } catch (err) {
+          clearTimeout(skeletonTimer);
+          if (err instanceof Error && err.name === "AbortError") return;
+          renderLoadError(path, err);
+        } finally {
+          els.viewer.setAttribute("aria-busy", "false");
+        }
+      }
+
+      els.filterButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          state.category = btn.dataset.category || "ALL";
+          els.filterButtons.forEach((b) => b.setAttribute("aria-pressed", b === btn ? "true" : "false"));
+          renderSidebarList();
+        });
+      });
+
+      els.search.addEventListener("input", () => {
+        clearTimeout(searchDebounce);
+        searchDebounce = setTimeout(() => {
+          state.query = els.search.value;
+          renderSidebarList();
+        }, 250);
+      });
+
+      els.docList.addEventListener("click", (event) => {
+        const button = event.target instanceof Element ? event.target.closest("[data-doc-path]") : null;
+        if (button instanceof HTMLElement && button.dataset.docPath) {
+          void selectDocument(button.dataset.docPath);
+        }
+      });
+
+      els.viewer.addEventListener("click", (event) => {
+        const link = event.target instanceof Element ? event.target.closest("[data-doc-link]") : null;
+        if (link instanceof HTMLElement && link.dataset.docLink) {
+          event.preventDefault();
+          void selectDocument(link.dataset.docLink);
+        }
+      });
+
+      els.copyBtn.addEventListener("click", async () => {
+        if (!state.activeMarkdown) return;
+        const original = els.copyBtn.textContent;
+        els.copyBtn.disabled = true;
+        try {
+          await navigator.clipboard.writeText(state.activeMarkdown);
+          els.copyBtn.textContent = "Copiado";
+          els.liveStatus.textContent = "Markdown copiado al portapapeles";
+        } catch {
+          els.copyBtn.textContent = "Error al copiar";
+        } finally {
+          setTimeout(() => {
+            els.copyBtn.textContent = original;
+            els.copyBtn.disabled = false;
+          }, 1200);
+        }
+      });
+
+      els.menuToggle.addEventListener("click", () => {
+        const isOpen = els.sidebar.getAttribute("data-open") === "true";
+        setDrawerOpen(!isOpen);
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && els.sidebar.getAttribute("data-open") === "true") {
+          setDrawerOpen(false);
+        }
+      });
+
+      const hashMatch = window.location.hash.match(/^#doc=(.+)$/);
+      const initialPath = hashMatch ? decodeURIComponent(hashMatch[1]) : "README.md";
+      void selectDocument(CATALOG_PATHS.has(initialPath) ? initialPath : "README.md");
+    </script>
+  </body>
+</html>
